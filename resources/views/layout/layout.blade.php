@@ -11,12 +11,12 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="/css/style.css">
-        <script type="text/javascript" href="{{ mix('/js/app.js') }}" ></script>
+        
     </head>
     <body>
 
         @yield('content')
         
-        
+        <script type="text/javascript" src="{{ mix('js/app.js') }}" ></script>
     </body>
     </html>

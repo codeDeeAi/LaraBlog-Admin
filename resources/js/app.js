@@ -1,4 +1,4 @@
-const { default: Vue } = require('vue');
+// const { default: Vue } = require('vue');
 
 require('./bootstrap');
 
