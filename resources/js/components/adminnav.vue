@@ -28,11 +28,14 @@
               <span class="sr-only">unread messages</span>
             </a>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Action 1</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            <div class="dropdown-menu pd-no" aria-labelledby="dropdownMenuLink">
+                    <div class=" card-title profile-dropdown">
+                        <h6>New Inbox</h6>
+                    </div>
+                    <a class="dropdown-item" href="#"> <img src="/imgs/books.jpg" alt=""><span>Sent a new message</span></a>
+                     <a class="dropdown-item" href="#"> <img src="/imgs/books.jpg" alt=""><span>Sent a new message</span></a>
+                      <a class="dropdown-item" href="#"> <img src="/imgs/books.jpg" alt=""><span>Sent a new message</span></a>
+               </div>
           </div>
         </li>
         <li class="nav-item">
@@ -51,9 +54,12 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Action 2</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <div class=" card-title profile-dropdown">
+                        <h6>New Notifications</h6>
+                    </div>
+                    <a class="dropdown-item" href="#">John Doe just registered</a>
+                     <a class="dropdown-item" href="#">John Doe just registered</a>
+                      <a class="dropdown-item" href="#">John Doe just registered</a>
             </div>
           </div>
         </li>
@@ -70,9 +76,13 @@
               <img src="/imgs/books.jpg" class="img-fluid" alt />
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">Action 3</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <div class=" card-title profile-dropdown">
+                  <h5>John Doe</h5>
+                  <p>Available</p>
+              </div>
+              <a class="dropdown-item" href="#"> <i class="fas fa-user"></i><span> Profile</span></a>
+              <a class="dropdown-item" href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
+              <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
             </div>
           </div>
         </li>
@@ -98,6 +108,14 @@
 export default {};
 </script>
 <style lang="scss"  scoped>
+// Helper classes
+.bd-no{
+    border: none;
+}
+.pd-no{
+    padding: 0;
+}
+// Helper Classes ends
 ul {
   padding: 1rem;
 }
@@ -152,5 +170,36 @@ nav ol li a:hover {
       }
     }
   }
+}
+// Dropdown styles
+.dropdown{
+    padding-top: 0 !important;
+
+    .dropdown-menu{
+        padding-top: 0 !important;
+        div{
+            &.profile-dropdown{
+                padding: 1rem;
+                padding-left: 1rem;
+                background-color: #00acee;
+            }
+        }
+        a{
+            &.dropdown-item{
+
+                i{
+                    padding-right: .5rem !important;
+                }
+                img{
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                }
+                span{
+                    padding-left: 1rem;
+                }
+            }
+        }
+    }
 }
 </style>

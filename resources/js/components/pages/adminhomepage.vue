@@ -8,38 +8,57 @@
             <i class="fas fa-angle-double-right"></i>
           </button>
         </div>
+        <!-- Navigation Icons -->
         <div class="navigation-icons">
           <span>
-            <router-link to="/">
+            <router-link to="/admin-dashboard">
               <i class="fas fa-home"></i>
             </router-link>
           </span>
           <span>
-            <i class="fas fa-user-circle"></i>
+            <router-link to="/admin-allblogs">
+            <i class="fa fa-th"></i>
+            </router-link>
           </span>
           <span>
-            <i class="fas fa-camera-retro"></i>
+            <router-link to="/">
+              <i class="fas fa-laptop"></i>
+            </router-link>
           </span>
           <span>
-            <i class="fas fa-comment-dots"></i>
+            <router-link to="/admin-allusers">
+              <i class="fas fa-users"></i>
+            </router-link>
           </span>
           <span>
-            <i class="fab fa-opencart"></i>
+            <router-link to="/admin-allmail">
+              <i class="fas fa-envelope"></i>
+            </router-link>
           </span>
         </div>
+        <!-- Navigation Icons Ends -->
+
+        <!-- Navigation Links -->
         <div class="navigation-links">
           <transition-group name="fade">
             <div v-show="showLink" key="1">
-              <router-link to="/">Home</router-link>
+              <router-link to="/admin-dashboard">Home</router-link>
             </div>
-            <div v-show="showLink" key="2">Profile</div>
-            <div v-show="showLink" key="3">Inventry</div>
+            <div v-show="showLink" key="2">
+              <router-link to="/admin-allblogs">Blogs</router-link>
+            </div>
+            <div v-show="showLink" key="3">
+              <router-link to="/">Create</router-link>
+            </div>
             <div v-show="showLink" key="4">
-              <router-link to="/store">Store</router-link>
+              <router-link to="/admin-allusers">Users</router-link>
             </div>
-            <div v-show="showLink" key="5">Cart</div>
+            <div v-show="showLink" key="5">
+              <router-link to="/admin-allmail">Mail</router-link>
+            </div>
           </transition-group>
         </div>
+        <!-- Navigation Links Ends -->
       </div>
       <!-- Left side (sidebar) ends  -->
 
@@ -51,60 +70,6 @@
         <!-- Router View for Admin -->
         <div class="router-view">
           <div class="container-90">
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
-            <p>This is the admin page</p>
             <router-view></router-view>
           </div>
         </div>
@@ -115,11 +80,9 @@
   </div>
 </template>
 <script>
-import sidenav from "../adminsidenav";
 import navmain from "../adminnav";
 export default {
   components: {
-    sidenav,
     navmain,
   },
   data() {
@@ -160,8 +123,7 @@ export default {
 // Main body
 .main-body {
   height: 100vh;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow-y: auto;
 }
 // Right Side (Main view)
 .right-side {
@@ -176,7 +138,7 @@ export default {
 
   .router-view {
     width: 100%;
-    height: 83vh;
+    height: 82vh;
     overflow-y: scroll;
   }
 }
@@ -224,6 +186,9 @@ export default {
   z-index: 999;
   transition: all 0.5s ease-in-out;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  // -webkit-box-shadow: 2px 2 3px 1px rgba(0,0,0,0.75);
+  // -moz-box-shadow: 2px 2px 3px 1px rgba(0,0,0,0.75);
+  // box-shadow: 2px 2px 3px 1px rgba(0,0,0,0.75);
 
   .control {
     display: flex;
@@ -294,7 +259,7 @@ export default {
     div {
       font-size: 1rem;
       padding-left: 10px;
-      margin-bottom: 37%;
+      margin-bottom: 40%;
       cursor: pointer;
 
       &:hover {
@@ -306,6 +271,7 @@ export default {
 
         &:hover {
           color: #fff;
+          text-decoration: none;
         }
       }
     }
@@ -331,6 +297,8 @@ export default {
 @media screen and (min-width: 571px) and (max-width: 800px) {
   .container {
     width: 8%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 
     .control {
       i {
@@ -357,6 +325,8 @@ export default {
 @media screen and (max-width: 570px) {
   .container {
     width: 10%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     padding: 0.4rem !important;
 
     .control {

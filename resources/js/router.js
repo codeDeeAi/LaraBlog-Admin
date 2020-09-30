@@ -8,6 +8,10 @@ Vue.use(Router);
 import homepage from "./components/pages/homepage.vue";
 import login from "./components/pages/login.vue";
 import adminhome from "./components/pages/adminhomepage.vue";
+import admindashboard from "./components/admindashboard.vue";
+import users from "./components/users.vue";
+import mail from "./components/mail.vue";
+import blogs from "./components/blogs.vue";
 
 const routes = [{
         path: "/my-new-vue-route",
@@ -21,9 +25,22 @@ const routes = [{
         path: "/adminhome",
         component: adminhome,
         children: [{
-            path: '/login2',
-            component: login
-        }, ]
+                path: '/admin-dashboard',
+                component: admindashboard
+            },
+            {
+                path: '/admin-allusers',
+                component: users
+            },
+            {
+                path: '/admin-allmail',
+                component: mail
+            },
+            {
+                path: '/admin-allblogs',
+                component: blogs
+            },
+        ]
     },
 ];
 
