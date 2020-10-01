@@ -30,16 +30,22 @@ class AdminController extends Controller
         // Validation
         $this->validate($request, [
             'name' => 'required',
-            'id' => 'required'
+            'index' => 'required'
         ]);
 
         // Create new tag
-        Tag::where('id', $request->id)->update([
+        Tag::where('id', $request->index)->update([
             'name' => $request->name
         ]);
         
         // Redirect to page
         // return redirect('/admin-alltags');
     }
-    public function deleteTag(){}
+    public function deleteTag(Request $request){
+         // Validation
+         $this->validate($request, [
+            'id' => 'required'
+        ]);
+         return Tag::where('id', $request->id)->delete();
+    }
 }

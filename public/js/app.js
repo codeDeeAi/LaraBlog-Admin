@@ -2701,6 +2701,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2716,6 +2721,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tags: [],
       editData: {
         name: ''
+      },
+      editDataNew: {
+        name: '',
+        index: ''
       }
     };
   },
@@ -2763,6 +2772,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     showEditModal: function showEditModal(tag, index) {
       this.editData = tag;
+      this.editDataNew.index = tag.id;
       $('#editTagModal').modal('show');
     },
     editTag: function editTag() {
@@ -2774,7 +2784,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.editData.name.trim() == '')) {
+                if (!(_this2.editDataNew.name.trim() == '')) {
                   _context2.next = 4;
                   break;
                 }
@@ -2783,7 +2793,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 _context2.next = 6;
-                return _this2.callApi('post', 'app/edit_tag', _this2.editData);
+                return _this2.callApi('post', 'app/edit_tag', _this2.editDataNew);
 
               case 6:
                 res = _context2.sent;
@@ -2791,8 +2801,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (res.status == 200) {
                   _this2.toast('Tag name has been edited successfully!', 'success');
 
-                  _this2.editData.name = '';
+                  _this2.editDataNew.name = '';
                   $('#editTagModal').modal('hide');
+
+                  _this2.tags.unshift(res.data);
                 } else {
                   _this2.toast('Error adding Tag!', 'error');
                 }
@@ -2804,36 +2816,81 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    deleteTag: function deleteTag(tag, i) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (confirm('Are you sure you want to delete this tag?')) {
+                  _context3.next = 4;
+                  break;
+                }
+
+                _this3.toast('Tag will not be deleted!', 'warning');
+
+                _context3.next = 8;
+                break;
+
+              case 4:
+                _context3.next = 6;
+                return _this3.callApi('post', 'app/delete_tag', tag);
+
+              case 6:
+                res = _context3.sent;
+
+                if (res.status == 200) {
+                  //  this.tags.splice[i, 1];                  
+                  _this3.toast('Tag name has been deleted successfully!', 'success');
+
+                  _this3.tags.unshift(res.data);
+                } else {
+                  _this3.toast('Something went wrong!', 'error');
+
+                  _this3.toast('Error deleting Tag!', 'error');
+                }
+
+              case 8:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.next = 2;
-              return _this3.callApi('get', 'app/get_tags', _this3.data);
+              _context4.next = 2;
+              return _this4.callApi('get', 'app/get_tags', _this4.data);
 
             case 2:
-              res = _context3.sent;
+              res = _context4.sent;
 
               if (res.status == 200) {
-                _this3.tags = res.data;
-                _this3.spin = true;
+                _this4.tags = res.data;
+                _this4.spin = true;
               } else {
-                _this3.toast('Something went wrong!', 'error');
+                _this4.toast('Something went wrong!', 'error');
               }
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   },
   mounted: function mounted() {// this.spin = true;
@@ -23611,7 +23668,12 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-danger",
-                          attrs: { type: "button" }
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteTag(tag, i)
+                            }
+                          }
                         },
                         [_vm._v("Delete")]
                       )
@@ -23743,8 +23805,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "tag-name" } }, [
-                      _vm._v("Edit Tag Name")
+                    _c("label", { attrs: { for: "tag-name-old" } }, [
+                      _vm._v("Current Tag Name")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -23756,11 +23818,12 @@ var render = function() {
                           expression: "editData.name"
                         }
                       ],
-                      staticClass: "form-control",
+                      staticClass: "form-control disabled",
                       attrs: {
                         type: "text",
-                        id: "exampleInputEmail1",
-                        "aria-describedby": "tagHelp"
+                        id: "oldTagName",
+                        "aria-describedby": "tagHelpOld",
+                        readonly: ""
                       },
                       domProps: { value: _vm.editData.name },
                       on: {
@@ -23777,9 +23840,50 @@ var render = function() {
                       "small",
                       {
                         staticClass: "form-text text-muted",
+                        attrs: { id: "tagHelpOld" }
+                      },
+                      [_vm._v("Current Tag Name")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "tag-name" } }, [
+                      _vm._v("New Tag Name")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editDataNew.name,
+                          expression: "editDataNew.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "newTagName",
+                        "aria-describedby": "tagHelp"
+                      },
+                      domProps: { value: _vm.editDataNew.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.editDataNew, "name", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "small",
+                      {
+                        staticClass: "form-text text-muted",
                         attrs: { id: "tagHelp" }
                       },
-                      [_vm._v("Edit Tag Name")]
+                      [_vm._v("New Tag Name")]
                     )
                   ])
                 ]),

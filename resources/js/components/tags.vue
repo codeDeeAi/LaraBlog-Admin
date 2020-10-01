@@ -21,7 +21,7 @@
             <td>{{tag.created_at}}</td>
             <td>
               <button type="button" class="btn btn-primary" @click="showEditModal(tag, i)">Edit</button>
-              <button type="button" class="btn btn-danger">Delete</button>
+              <button type="button" class="btn btn-danger" @click="deleteTag(tag, i)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -61,10 +61,15 @@
             <h5 class="modal-title" id="exampleModalLabel">Edit Tag</h5>
         </div>
         <div class="modal-body">
+          <div class="form-group">
+                <label for="tag-name-old">Current Tag Name</label>
+                <input v-model="editData.name" type="text" class="form-control disabled" id="oldTagName" aria-describedby="tagHelpOld" readonly>
+                <small id="tagHelpOld" class="form-text text-muted">Current Tag Name</small>
+            </div>
             <div class="form-group">
-                <label for="tag-name">Edit Tag Name</label>
-                <input v-model="editData.name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="tagHelp">
-                <small id="tagHelp" class="form-text text-muted">Edit Tag Name</small>
+                <label for="tag-name">New Tag Name</label>
+                <input v-model="editDataNew.name" type="text" class="form-control" id="newTagName" aria-describedby="tagHelp">
+                <small id="tagHelp" class="form-text text-muted">New Tag Name</small>
             </div>
         </div>
         <div class="modal-footer">
@@ -94,7 +99,11 @@ export default {
       tags: [],
       editData:{
         name: ''
-      }
+      },
+      editDataNew:{
+        name: '',
+        index: ''
+      },
     }
   },
   methods: {
@@ -118,27 +127,49 @@ export default {
       },
       showEditModal(tag, index){
         this.editData = tag;
+        this.editDataNew.index = tag.id;
          $('#editTagModal').modal('show');
       },
  
   async editTag(){
-          if (this.editData.name.trim()=='') {
+          if (this.editDataNew.name.trim()=='') {
             return  this.toast('Tag name is required!', 'error');
           }else{
               const res = await this.callApi(
                   'post',
                   'app/edit_tag',
-                  this.editData 
+                  this.editDataNew 
               )
               if (res.status==200) {                     
                      this.toast('Tag name has been edited successfully!', 'success');
-                     this.editData.name = '';
+                     this.editDataNew.name = '';
                      $('#editTagModal').modal('hide');
+                     this.tags.unshift(res.data);
                   } else{
                       this.toast('Error adding Tag!', 'error');
                   }
           }
       },
+
+      async deleteTag(tag, i){
+          if (!confirm('Are you sure you want to delete this tag?')) {
+              this.toast('Tag will not be deleted!', 'warning');
+          }else{            
+            const res = await this.callApi(
+                  'post',
+                  'app/delete_tag',
+                   tag 
+              );
+               if (res.status==200) {   
+                //  this.tags.splice[i, 1];                  
+                     this.toast('Tag name has been deleted successfully!', 'success');
+                     this.tags.unshift(res.data);
+                  } else{
+                      this.toast('Something went wrong!', 'error');
+                      this.toast('Error deleting Tag!', 'error');
+                  }
+          }
+      }
      },  
   async created() {
      const res = await this.callApi(
