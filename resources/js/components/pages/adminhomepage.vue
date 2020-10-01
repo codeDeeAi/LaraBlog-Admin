@@ -21,13 +21,13 @@
             </router-link>
           </span>
           <span>
-            <router-link to="/admin-alltags">
-            <i class="fa fa-table"></i>
+            <router-link to="/">
+              <i class="fas fa-laptop"></i>
             </router-link>
           </span>
           <span>
-            <router-link to="/">
-              <i class="fas fa-laptop"></i>
+            <router-link to="/admin-alltags">
+            <i class="fa fa-table"></i>
             </router-link>
           </span>
           <span>
@@ -51,12 +51,12 @@
             </div>
             <div v-show="showLink" key="2">
               <router-link to="/admin-allblogs">Blogs</router-link>
-            </div>
+            </div>            
             <div v-show="showLink" key="3">
-              <router-link to="/admin-alltags">Tags</router-link>
+              <router-link to="/">Create</router-link>
             </div>
             <div v-show="showLink" key="4">
-              <router-link to="/">Create</router-link>
+              <router-link to="/admin-alltags">Tags</router-link>
             </div>
             <div v-show="showLink" key="5">
               <router-link to="/admin-allusers">Users</router-link>
@@ -261,7 +261,7 @@ export default {
     }
   }
   .navigation-links {
-    padding-top: 16%;
+    padding-top: 18%;
     padding-left: 20%;
     float: left;
 

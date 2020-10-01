@@ -9,6 +9,11 @@ class AdminController extends Controller
 {
     public function addTag(Request $request){
         // Validation
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        // Create new tag
         Tag::create([
             'name' => $request->name
         ]);
@@ -18,6 +23,23 @@ class AdminController extends Controller
     }
     public function getTag(){
         // Validation
-        return Tag::all();
+        return Tag::orderBy('id', 'desc')->get();
     }
+
+    public function editTag(Request $request){
+        // Validation
+        $this->validate($request, [
+            'name' => 'required',
+            'id' => 'required'
+        ]);
+
+        // Create new tag
+        Tag::where('id', $request->id)->update([
+            'name' => $request->name
+        ]);
+        
+        // Redirect to page
+        // return redirect('/admin-alltags');
+    }
+    public function deleteTag(){}
 }

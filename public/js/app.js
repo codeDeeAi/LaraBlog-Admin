@@ -2677,6 +2677,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2689,7 +2713,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: ''
       },
       isAdding: false,
-      tags: []
+      tags: [],
+      editData: {
+        name: ''
+      }
     };
   },
   methods: {
@@ -2717,7 +2744,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 res = _context.sent;
 
                 if (res.status == 200) {
+                  _this.tags.unshift(res.data);
+
                   _this.toast('Tag has been added successfully!', 'success');
+
+                  _this.data.name = '';
                 } else {
                   _this.toast('Error adding Tag!', 'error');
                 }
@@ -2729,39 +2760,83 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    showEditModal: function showEditModal(tag, index) {
+      this.editData = tag;
+      $('#editTagModal').modal('show');
+    },
+    editTag: function editTag() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(_this2.editData.name.trim() == '')) {
+                  _context2.next = 4;
+                  break;
+                }
+
+                return _context2.abrupt("return", _this2.toast('Tag name is required!', 'error'));
+
+              case 4:
+                _context2.next = 6;
+                return _this2.callApi('post', 'app/edit_tag', _this2.editData);
+
+              case 6:
+                res = _context2.sent;
+
+                if (res.status == 200) {
+                  _this2.toast('Tag name has been edited successfully!', 'success');
+
+                  _this2.editData.name = '';
+                  $('#editTagModal').modal('hide');
+                } else {
+                  _this2.toast('Error adding Tag!', 'error');
+                }
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context2.next = 2;
-              return _this2.callApi('get', 'app/get_tags', _this2.data);
+              _context3.next = 2;
+              return _this3.callApi('get', 'app/get_tags', _this3.data);
 
             case 2:
-              res = _context2.sent;
+              res = _context3.sent;
 
               if (res.status == 200) {
-                _this2.tags = res.data;
+                _this3.tags = res.data;
+                _this3.spin = true;
               } else {
-                _this2.toast('Something went wrong!', 'error');
+                _this3.toast('Something went wrong!', 'error');
               }
 
             case 4:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   },
-  mounted: function mounted() {
-    this.spin = true;
+  mounted: function mounted() {// this.spin = true;
   }
 });
 
@@ -2896,7 +2971,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".container-90[data-v-6e8dbe37] {\n  width: 90%;\n  margin: auto;\n}\n.main-body[data-v-6e8dbe37] {\n  height: 100vh;\n  overflow-y: auto;\n}\n.right-side[data-v-6e8dbe37] {\n  width: 91.5%;\n  margin-left: 7%;\n  transition: all 0.5s ease-in-out;\n}\n.right-side.main[data-v-6e8dbe37] {\n  margin-left: 20.2%;\n  width: 78%;\n}\n.right-side .router-view[data-v-6e8dbe37] {\n  width: 100%;\n  height: 82vh;\n  overflow-y: scroll;\n}\n@media screen and (min-width: 571px) and (max-width: 800px) {\n.right-side[data-v-6e8dbe37] {\n    width: 89%;\n    margin-left: 9%;\n    transition: all 0.5s ease-in-out;\n    height: 100vh;\n}\n.right-side.main[data-v-6e8dbe37] {\n    margin-left: 25%;\n    width: 72%;\n}\n}\n@media screen and (max-width: 570px) {\n.right-side[data-v-6e8dbe37] {\n    width: 84%;\n    margin-left: 12%;\n    transition: all 0.5s ease-in-out;\n    height: 100vh;\n}\n.right-side.main[data-v-6e8dbe37] {\n    margin-left: 26%;\n    width: 70%;\n}\n}\n.container[data-v-6e8dbe37] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 6%;\n  padding: 1rem;\n  min-height: 100vh;\n  background-color: rgba(0, 172, 238, 0.8);\n  border: solid #fff;\n  border-width: 0 1px 0 0;\n  border-top-right-radius: 10px;\n  border-bottom-right-radius: 10px;\n  z-index: 999;\n  transition: all 0.5s ease-in-out;\n  font-family: \"Franklin Gothic Medium\", \"Arial Narrow\", Arial, sans-serif;\n}\n.container .control[data-v-6e8dbe37] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 20px;\n  margin-bottom: 10px;\n}\n.container .control i[data-v-6e8dbe37] {\n  font-size: 4rem;\n  cursor: pointer;\n  transition: all 0.2s ease-in-out;\n}\n.container.show[data-v-6e8dbe37] {\n  width: 20%;\n}\n.container.show .control > button[data-v-6e8dbe37] {\n  color: #fff;\n  transform: rotateZ(-180deg);\n}\n.container.show .navigation-icons[data-v-6e8dbe37] {\n  color: #fff;\n}\n.container.show .navigation-icons a[data-v-6e8dbe37] {\n  color: #fff;\n}\n.container .navigation-icons[data-v-6e8dbe37] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  margin: 10% auto;\n  float: left;\n}\n.container .navigation-icons span[data-v-6e8dbe37] {\n  font-size: 1.2rem;\n  padding: 10px 0;\n  cursor: pointer;\n  transition: all 0.5s ease-in-out;\n}\n.container .navigation-icons span[data-v-6e8dbe37]:hover {\n  color: #fff;\n}\n.container .navigation-icons span a[data-v-6e8dbe37] {\n  color: #222;\n}\n.container .navigation-icons span a[data-v-6e8dbe37]:hover {\n  color: #fff;\n}\n.container .navigation-links[data-v-6e8dbe37] {\n  padding-top: 16%;\n  padding-left: 20%;\n  float: left;\n}\n.container .navigation-links div[data-v-6e8dbe37] {\n  font-size: 1rem;\n  padding-left: 10px;\n  margin-bottom: 40%;\n  cursor: pointer;\n}\n.container .navigation-links div[data-v-6e8dbe37]:hover {\n  color: #fff;\n}\n.container .navigation-links div a[data-v-6e8dbe37] {\n  color: #222;\n}\n.container .navigation-links div a[data-v-6e8dbe37]:hover {\n  color: #fff;\n  text-decoration: none;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(1),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(1) {\n  transition: tranform linear calc(0.1s * 1), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(2),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(2) {\n  transition: tranform linear calc(0.1s * 2), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(3),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(3) {\n  transition: tranform linear calc(0.1s * 3), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(4),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(4) {\n  transition: tranform linear calc(0.1s * 4), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(5),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(5) {\n  transition: tranform linear calc(0.1s * 5), display 0.5s;\n}\n.fade-enter[data-v-6e8dbe37],\n.fade-leave-to[data-v-6e8dbe37] {\n  transform: scale(0);\n}\n@media screen and (min-width: 571px) and (max-width: 800px) {\n.container[data-v-6e8dbe37] {\n    width: 8%;\n    border-top-right-radius: 5px;\n    border-bottom-right-radius: 5px;\n}\n.container .control i[data-v-6e8dbe37] {\n    font-size: 1rem;\n}\n.container.show[data-v-6e8dbe37] {\n    width: 25%;\n}\n.container .navigation-icons span[data-v-6e8dbe37] {\n    font-size: 1rem;\n}\n.container .navigation-links[data-v-6e8dbe37] {\n    padding-left: 10%;\n    padding-top: 18%;\n}\n}\n@media screen and (max-width: 570px) {\n.container[data-v-6e8dbe37] {\n    width: 10%;\n    border-top-right-radius: 5px;\n    border-bottom-right-radius: 5px;\n    padding: 0.4rem !important;\n}\n.container .control i[data-v-6e8dbe37] {\n    font-size: 0.5rem;\n}\n.container.show[data-v-6e8dbe37] {\n    width: 25%;\n}\n.container .navigation-icons span[data-v-6e8dbe37] {\n    font-size: 0.8rem;\n    padding-left: -0.001rem;\n}\n.container .navigation-links[data-v-6e8dbe37] {\n    padding-left: 3%;\n    padding-top: 20%;\n}\n.container .navigation-links div[data-v-6e8dbe37] {\n    font-size: 0.75rem;\n    margin-bottom: 40%;\n}\n}", ""]);
+exports.push([module.i, ".container-90[data-v-6e8dbe37] {\n  width: 90%;\n  margin: auto;\n}\n.main-body[data-v-6e8dbe37] {\n  height: 100vh;\n  overflow-y: auto;\n}\n.right-side[data-v-6e8dbe37] {\n  width: 91.5%;\n  margin-left: 7%;\n  transition: all 0.5s ease-in-out;\n}\n.right-side.main[data-v-6e8dbe37] {\n  margin-left: 20.2%;\n  width: 78%;\n}\n.right-side .router-view[data-v-6e8dbe37] {\n  width: 100%;\n  height: 82vh;\n  overflow-y: scroll;\n}\n@media screen and (min-width: 571px) and (max-width: 800px) {\n.right-side[data-v-6e8dbe37] {\n    width: 89%;\n    margin-left: 9%;\n    transition: all 0.5s ease-in-out;\n    height: 100vh;\n}\n.right-side.main[data-v-6e8dbe37] {\n    margin-left: 25%;\n    width: 72%;\n}\n}\n@media screen and (max-width: 570px) {\n.right-side[data-v-6e8dbe37] {\n    width: 84%;\n    margin-left: 12%;\n    transition: all 0.5s ease-in-out;\n    height: 100vh;\n}\n.right-side.main[data-v-6e8dbe37] {\n    margin-left: 26%;\n    width: 70%;\n}\n}\n.container[data-v-6e8dbe37] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 6%;\n  padding: 1rem;\n  min-height: 100vh;\n  background-color: rgba(0, 172, 238, 0.8);\n  border: solid #fff;\n  border-width: 0 1px 0 0;\n  border-top-right-radius: 10px;\n  border-bottom-right-radius: 10px;\n  z-index: 999;\n  transition: all 0.5s ease-in-out;\n  font-family: \"Franklin Gothic Medium\", \"Arial Narrow\", Arial, sans-serif;\n}\n.container .control[data-v-6e8dbe37] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 20px;\n  margin-bottom: 10px;\n}\n.container .control i[data-v-6e8dbe37] {\n  font-size: 4rem;\n  cursor: pointer;\n  transition: all 0.2s ease-in-out;\n}\n.container.show[data-v-6e8dbe37] {\n  width: 20%;\n}\n.container.show .control > button[data-v-6e8dbe37] {\n  color: #fff;\n  transform: rotateZ(-180deg);\n}\n.container.show .navigation-icons[data-v-6e8dbe37] {\n  color: #fff;\n}\n.container.show .navigation-icons a[data-v-6e8dbe37] {\n  color: #fff;\n}\n.container .navigation-icons[data-v-6e8dbe37] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  margin: 10% auto;\n  float: left;\n}\n.container .navigation-icons span[data-v-6e8dbe37] {\n  font-size: 1.2rem;\n  padding: 10px 0;\n  cursor: pointer;\n  transition: all 0.5s ease-in-out;\n}\n.container .navigation-icons span[data-v-6e8dbe37]:hover {\n  color: #fff;\n}\n.container .navigation-icons span a[data-v-6e8dbe37] {\n  color: #222;\n}\n.container .navigation-icons span a[data-v-6e8dbe37]:hover {\n  color: #fff;\n}\n.container .navigation-links[data-v-6e8dbe37] {\n  padding-top: 18%;\n  padding-left: 20%;\n  float: left;\n}\n.container .navigation-links div[data-v-6e8dbe37] {\n  font-size: 1rem;\n  padding-left: 10px;\n  margin-bottom: 40%;\n  cursor: pointer;\n}\n.container .navigation-links div[data-v-6e8dbe37]:hover {\n  color: #fff;\n}\n.container .navigation-links div a[data-v-6e8dbe37] {\n  color: #222;\n}\n.container .navigation-links div a[data-v-6e8dbe37]:hover {\n  color: #fff;\n  text-decoration: none;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(1),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(1) {\n  transition: tranform linear calc(0.1s * 1), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(2),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(2) {\n  transition: tranform linear calc(0.1s * 2), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(3),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(3) {\n  transition: tranform linear calc(0.1s * 3), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(4),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(4) {\n  transition: tranform linear calc(0.1s * 4), display 0.5s;\n}\n.fade-enter-active[data-v-6e8dbe37]:nth-child(5),\n.fade-leave-active[data-v-6e8dbe37]:nth-child(5) {\n  transition: tranform linear calc(0.1s * 5), display 0.5s;\n}\n.fade-enter[data-v-6e8dbe37],\n.fade-leave-to[data-v-6e8dbe37] {\n  transform: scale(0);\n}\n@media screen and (min-width: 571px) and (max-width: 800px) {\n.container[data-v-6e8dbe37] {\n    width: 8%;\n    border-top-right-radius: 5px;\n    border-bottom-right-radius: 5px;\n}\n.container .control i[data-v-6e8dbe37] {\n    font-size: 1rem;\n}\n.container.show[data-v-6e8dbe37] {\n    width: 25%;\n}\n.container .navigation-icons span[data-v-6e8dbe37] {\n    font-size: 1rem;\n}\n.container .navigation-links[data-v-6e8dbe37] {\n    padding-left: 10%;\n    padding-top: 18%;\n}\n}\n@media screen and (max-width: 570px) {\n.container[data-v-6e8dbe37] {\n    width: 10%;\n    border-top-right-radius: 5px;\n    border-bottom-right-radius: 5px;\n    padding: 0.4rem !important;\n}\n.container .control i[data-v-6e8dbe37] {\n    font-size: 0.5rem;\n}\n.container.show[data-v-6e8dbe37] {\n    width: 25%;\n}\n.container .navigation-icons span[data-v-6e8dbe37] {\n    font-size: 0.8rem;\n    padding-left: -0.001rem;\n}\n.container .navigation-links[data-v-6e8dbe37] {\n    padding-left: 3%;\n    padding-top: 20%;\n}\n.container .navigation-links div[data-v-6e8dbe37] {\n    font-size: 0.75rem;\n    margin-bottom: 40%;\n}\n}", ""]);
 
 // exports
 
@@ -23101,8 +23176,8 @@ var render = function() {
             _c(
               "span",
               [
-                _c("router-link", { attrs: { to: "/admin-alltags" } }, [
-                  _c("i", { staticClass: "fa fa-table" })
+                _c("router-link", { attrs: { to: "/" } }, [
+                  _c("i", { staticClass: "fas fa-laptop" })
                 ])
               ],
               1
@@ -23111,8 +23186,8 @@ var render = function() {
             _c(
               "span",
               [
-                _c("router-link", { attrs: { to: "/" } }, [
-                  _c("i", { staticClass: "fas fa-laptop" })
+                _c("router-link", { attrs: { to: "/admin-alltags" } }, [
+                  _c("i", { staticClass: "fa fa-table" })
                 ])
               ],
               1
@@ -23200,8 +23275,8 @@ var render = function() {
                     key: "3"
                   },
                   [
-                    _c("router-link", { attrs: { to: "/admin-alltags" } }, [
-                      _vm._v("Tags")
+                    _c("router-link", { attrs: { to: "/" } }, [
+                      _vm._v("Create")
                     ])
                   ],
                   1
@@ -23221,8 +23296,8 @@ var render = function() {
                     key: "4"
                   },
                   [
-                    _c("router-link", { attrs: { to: "/" } }, [
-                      _vm._v("Create")
+                    _c("router-link", { attrs: { to: "/admin-alltags" } }, [
+                      _vm._v("Tags")
                     ])
                   ],
                   1
@@ -23517,7 +23592,30 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tag.created_at))]),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.showEditModal(tag, i)
+                            }
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v("Delete")]
+                      )
+                    ])
                   ])
                 : _vm._e()
             }),
@@ -23544,7 +23642,7 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("div", { staticClass: "form-group" }, [
@@ -23621,6 +23719,103 @@ var render = function() {
             ]
           )
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "editTagModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "tag-name" } }, [
+                      _vm._v("Edit Tag Name")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editData.name,
+                          expression: "editData.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "exampleInputEmail1",
+                        "aria-describedby": "tagHelp"
+                      },
+                      domProps: { value: _vm.editData.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.editData, "name", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "small",
+                      {
+                        staticClass: "form-text text-muted",
+                        attrs: { id: "tagHelp" }
+                      },
+                      [_vm._v("Edit Tag Name")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: {
+                        type: "button",
+                        disabled: _vm.isAdding,
+                        loading: _vm.isAdding
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.editTag()
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.isAdding ? "Editing ..." : "Edit Tag"))]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
       )
     ],
     1
@@ -23632,7 +23827,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h4", { staticClass: "card-title" }, [
-      _vm._v("Tags "),
+      _vm._v("Categories "),
       _c(
         "a",
         {
@@ -23667,17 +23862,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
+    return _c("div", { staticClass: "modal-header" }, [
       _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Edit")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-danger", attrs: { type: "button" } },
-        [_vm._v("Delete")]
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Add Tag")]
       )
     ])
   },
@@ -23689,7 +23878,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Add Tag")]
+        [_vm._v("Edit Tag")]
       )
     ])
   }
