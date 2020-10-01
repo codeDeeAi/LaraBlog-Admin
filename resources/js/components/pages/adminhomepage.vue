@@ -21,6 +21,11 @@
             </router-link>
           </span>
           <span>
+            <router-link to="/admin-alltags">
+            <i class="fa fa-table"></i>
+            </router-link>
+          </span>
+          <span>
             <router-link to="/">
               <i class="fas fa-laptop"></i>
             </router-link>
@@ -48,12 +53,15 @@
               <router-link to="/admin-allblogs">Blogs</router-link>
             </div>
             <div v-show="showLink" key="3">
-              <router-link to="/">Create</router-link>
+              <router-link to="/admin-alltags">Tags</router-link>
             </div>
             <div v-show="showLink" key="4">
-              <router-link to="/admin-allusers">Users</router-link>
+              <router-link to="/">Create</router-link>
             </div>
             <div v-show="showLink" key="5">
+              <router-link to="/admin-allusers">Users</router-link>
+            </div>
+            <div v-show="showLink" key="6">
               <router-link to="/admin-allmail">Mail</router-link>
             </div>
           </transition-group>
@@ -248,6 +256,7 @@ export default {
         &:hover {
           color: #fff;
         }
+        
       }
     }
   }

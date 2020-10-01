@@ -10,4 +10,10 @@ class NewController extends Controller
 
         return view('new');
     }
+
+    public function test(){
+        return response()->json([
+            'msg' => 'some err occured'
+        ], 422);
+    }
 }

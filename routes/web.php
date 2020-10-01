@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Routes for get tag
+Route::post('app/create_tag', 'AdminController@addTag');
+Route::get('app/get_tags', 'AdminController@getTag');
 
 Route::get('/', function () {
     return view('welcome');

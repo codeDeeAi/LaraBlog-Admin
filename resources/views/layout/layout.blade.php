@@ -38,6 +38,8 @@
         {{-- Bootstrap --}}
         <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        {{-- Util Js --}}
+        <script type="text/javascript" src="js/util.js"></script>
 
         {{-- Font Awesome --}}
         <script type="text/javascript" src="js/all.min.js"></script>

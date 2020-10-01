@@ -12,6 +12,7 @@ import admindashboard from "./components/admindashboard.vue";
 import users from "./components/users.vue";
 import mail from "./components/mail.vue";
 import blogs from "./components/blogs.vue";
+import tags from "./components/tags.vue";
 
 const routes = [{
         path: "/my-new-vue-route",
@@ -39,6 +40,10 @@ const routes = [{
             {
                 path: '/admin-allblogs',
                 component: blogs
+            },
+            {
+                path: '/admin-alltags',
+                component: tags
             },
         ]
     },
