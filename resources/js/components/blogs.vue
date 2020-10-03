@@ -56,6 +56,7 @@
 <script>
 import loader from "./loader";
 export default {
+  name: 'blogs',
   components:{
     loader
   },

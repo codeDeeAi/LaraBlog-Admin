@@ -2037,7 +2037,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'dashboard'
+});
 
 /***/ }),
 
@@ -2227,6 +2229,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'blogs',
   components: {
     loader: _loader__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2337,8 +2340,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'category',
   components: {
     loader: _loader__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -2354,11 +2388,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       image: null,
       uploadValue: '',
       check: false,
-      data: [] //   token: ''
+      data: [],
+      editData: {
+        category: '',
+        id: null
+      },
+      storeEditData: {} //   token: ''
 
     };
   },
   methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.callApi('get', 'app/get_category', _this.data);
+
+              case 2:
+                res = _context.sent;
+
+                if (res.status == 200) {
+                  _this.data = res.data;
+                  _this.spin = true;
+                } else {
+                  _this.toast('Something went wrong!', 'error');
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     onFileSelected: function onFileSelected(e) {
       // this.uploadValue= 0;
       // this.picture=null;  
@@ -2371,60 +2440,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.reader(image);
     },
     reader: function reader(image) {
-      var _this = this;
+      var _this2 = this;
 
       var reader = new FileReader();
       reader.readAsDataURL(image);
 
       reader.onload = function (e) {
-        _this.picture = e.target.result;
-        _this.check = true;
+        _this2.picture = e.target.result;
+        _this2.check = true;
       };
     },
     upload: function upload() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.category.trim() == '')) {
-                  _context.next = 5;
+                if (!(_this3.category.trim() == '')) {
+                  _context2.next = 5;
                   break;
                 }
 
-                _this2.toast('Category name is required !', 'error');
+                _this3.toast('Category name is required !', 'error');
 
-                _this2.toast('Input category name ! ', 'error');
+                _this3.toast('Input category name ! ', 'error');
 
-                _context.next = 9;
+                _context2.next = 16;
                 break;
 
               case 5:
-                _context.next = 7;
-                return _this2.callApi('post', 'app/upload_category', _this2.all);
+                _context2.next = 7;
+                return _this3.callApi('post', 'app/upload_category', _this3.all);
 
               case 7:
-                res = _context.sent;
+                res = _context2.sent;
 
-                if (!res.status == 200) {
-                  _this2.toast('Error adding category !', 'error');
-                } else {
-                  _this2.toast('image Upload successful !', 'success');
-
-                  _this2.toast('Category has been added successfully!', 'success');
-
-                  _this2.all.catName = '';
+                if (!(!res.status == 200)) {
+                  _context2.next = 12;
+                  break;
                 }
 
-              case 9:
+                _this3.toast('Error adding category !', 'error');
+
+                _context2.next = 16;
+                break;
+
+              case 12:
+                _this3.toast('image Upload successful !', 'success');
+
+                _this3.toast('Category has been added successfully!', 'success');
+
+                _this3.all.catName = '';
+                return _context2.abrupt("return", _this3.fetchData());
+
+              case 16:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     saveNew: function saveNew() {
@@ -2433,36 +2510,83 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else {
         $('#uploadModal').modal('hide');
       }
+    },
+    editNameModal: function editNameModal(d, i) {
+      $('#editModal').modal('show');
+      this.storeEditData = d;
+      this.editData.id = d.id;
+    },
+    editName: function editName() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(_this4.editData.category.trim() == '')) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                _this4.toast('Edit or click <b>Close</b> !', 'info');
+
+                _this4.toast('New category name is required !', 'error');
+
+                _context3.next = 16;
+                break;
+
+              case 5:
+                _context3.next = 7;
+                return _this4.callApi('post', 'app/edit_category', _this4.editData);
+
+              case 7:
+                res = _context3.sent;
+
+                if (!(!res.status == 200)) {
+                  _context3.next = 12;
+                  break;
+                }
+
+                _this4.toast('Error adding  new name !', 'error');
+
+                _context3.next = 16;
+                break;
+
+              case 12:
+                _this4.toast('Category name updated successfully !', 'success');
+
+                _this4.editData.category = '';
+                $('#editModal').modal('hide');
+                return _context3.abrupt("return", _this4.fetchData());
+
+              case 16:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this5 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context2.next = 2;
-              return _this3.callApi('get', 'app/get_category', _this3.data);
+              //   this.token = window.Laravel.csrfToken
+              _this5.fetchData();
 
-            case 2:
-              res = _context2.sent;
-
-              if (res.status == 200) {
-                _this3.data = res.data;
-                _this3.spin = true;
-              } else {
-                _this3.toast('Something went wrong!', 'error');
-              }
-
-            case 4:
+            case 1:
             case "end":
-              return _context2.stop();
+              return _context4.stop();
           }
         }
-      }, _callee2);
+      }, _callee4);
     }))();
   },
   mounted: function mounted() {// this.spin = true;
@@ -2576,6 +2700,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'mail',
   components: {
     loader: _loader__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2723,6 +2848,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'home',
   components: {
     navmain: _adminnav__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2945,6 +3071,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'tags',
   components: {
     loader: _loader__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -2966,7 +3093,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    addTag: function addTag() {
+    fetchData: function fetchData() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2975,31 +3102,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this.data.name.trim() == '')) {
-                  _context.next = 4;
-                  break;
-                }
+                _context.next = 2;
+                return _this.callApi('get', 'app/get_tags', _this.data);
 
-                return _context.abrupt("return", _this.toast('Tag name is required!', 'error'));
-
-              case 4:
-                _context.next = 6;
-                return _this.callApi('post', 'app/create_tag', _this.data);
-
-              case 6:
+              case 2:
                 res = _context.sent;
 
                 if (res.status == 200) {
-                  _this.tags.unshift(res.data);
-
-                  _this.toast('Tag has been added successfully!', 'success');
-
-                  _this.data.name = '';
+                  _this.tags = res.data;
+                  _this.spin = true;
                 } else {
-                  _this.toast('Error adding Tag!', 'error');
+                  _this.toast('Something went wrong!', 'error');
                 }
 
-              case 8:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -3007,12 +3123,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    showEditModal: function showEditModal(tag, index) {
-      this.editData = tag;
-      this.editDataNew.index = tag.id;
-      $('#editTagModal').modal('show');
-    },
-    editTag: function editTag() {
+    addTag: function addTag() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3021,7 +3132,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.editDataNew.name.trim() == '')) {
+                if (!(_this2.data.name.trim() == '')) {
                   _context2.next = 4;
                   break;
                 }
@@ -3030,23 +3141,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 _context2.next = 6;
-                return _this2.callApi('post', 'app/edit_tag', _this2.editDataNew);
+                return _this2.callApi('post', 'app/create_tag', _this2.data);
 
               case 6:
                 res = _context2.sent;
 
-                if (res.status == 200) {
-                  _this2.toast('Tag name has been edited successfully!', 'success');
-
-                  _this2.editDataNew.name = '';
-                  $('#editTagModal').modal('hide');
-
-                  _this2.tags.unshift(res.data);
-                } else {
-                  _this2.toast('Error adding Tag!', 'error');
+                if (!(res.status == 200)) {
+                  _context2.next = 14;
+                  break;
                 }
 
-              case 8:
+                _this2.toast('Tag has been added successfully!', 'success');
+
+                _this2.data.name = '';
+                $('#addTagModal').modal('hide');
+                return _context2.abrupt("return", _this2.fetchData());
+
+              case 14:
+                _this2.toast('Error adding Tag!', 'error');
+
+              case 15:
               case "end":
                 return _context2.stop();
             }
@@ -3054,7 +3168,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    deleteTag: function deleteTag(tag, i) {
+    showEditModal: function showEditModal(tag, index) {
+      this.editData = tag;
+      this.editDataNew.index = tag.id;
+      $('#editTagModal').modal('show');
+    },
+    editTag: function editTag() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -3063,71 +3182,107 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                if (confirm('Are you sure you want to delete this tag?')) {
+                if (!(_this3.editDataNew.name.trim() == '')) {
                   _context3.next = 4;
                   break;
                 }
 
-                _this3.toast('Tag will not be deleted!', 'warning');
-
-                _context3.next = 8;
-                break;
+                return _context3.abrupt("return", _this3.toast('Tag name is required!', 'error'));
 
               case 4:
                 _context3.next = 6;
-                return _this3.callApi('post', 'app/delete_tag', tag);
+                return _this3.callApi('post', 'app/edit_tag', _this3.editDataNew);
 
               case 6:
                 res = _context3.sent;
 
-                if (res.status == 200) {
-                  //  this.tags.splice[i, 1];                  
-                  _this3.toast('Tag name has been deleted successfully!', 'success');
-
-                  _this3.tags.unshift(res.data);
-                } else {
-                  _this3.toast('Something went wrong!', 'error');
-
-                  _this3.toast('Error deleting Tag!', 'error');
+                if (!(res.status == 200)) {
+                  _context3.next = 14;
+                  break;
                 }
 
-              case 8:
+                _this3.toast('Tag name has been edited successfully!', 'success');
+
+                _this3.editDataNew.name = '';
+                $('#editTagModal').modal('hide');
+                return _context3.abrupt("return", _this3.fetchData());
+
+              case 14:
+                _this3.toast('Error adding Tag!', 'error');
+
+              case 15:
               case "end":
                 return _context3.stop();
             }
           }
         }, _callee3);
       }))();
+    },
+    deleteTag: function deleteTag(tag, i) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (confirm('Are you sure you want to delete this tag?')) {
+                  _context4.next = 4;
+                  break;
+                }
+
+                _this4.toast('Tag will not be deleted!', 'warning');
+
+                _context4.next = 14;
+                break;
+
+              case 4:
+                _context4.next = 6;
+                return _this4.callApi('post', 'app/delete_tag', tag);
+
+              case 6:
+                res = _context4.sent;
+
+                if (!(res.status == 200)) {
+                  _context4.next = 12;
+                  break;
+                }
+
+                _this4.toast('Tag name has been deleted successfully!', 'success');
+
+                return _context4.abrupt("return", _this4.fetchData());
+
+              case 12:
+                _this4.toast('Something went wrong!', 'error');
+
+                _this4.toast('Error deleting Tag!', 'error');
+
+              case 14:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              _context4.next = 2;
-              return _this4.callApi('get', 'app/get_tags', _this4.data);
+              _this5.fetchData();
 
-            case 2:
-              res = _context4.sent;
-
-              if (res.status == 200) {
-                _this4.tags = res.data;
-                _this4.spin = true;
-              } else {
-                _this4.toast('Something went wrong!', 'error');
-              }
-
-            case 4:
+            case 1:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   },
   mounted: function mounted() {// this.spin = true;
@@ -3200,6 +3355,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'users',
   components: {
     loader: _loader__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3265,7 +3421,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#success img[data-v-157c8eb2] {\n  width: 70px;\n  height: 70px;\n  margin: 3% auto;\n}\n.blogs-table table tbody td span img[data-v-157c8eb2] {\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  margin-right: 4%;\n}", ""]);
+exports.push([module.i, "#success img[data-v-157c8eb2] {\n  margin: 3% auto;\n}\n.blogs-table table tbody td span img[data-v-157c8eb2] {\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  margin-right: 4%;\n}", ""]);
 
 // exports
 
@@ -23305,7 +23461,30 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(d.created_at))]),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.editNameModal(d, i)
+                            }
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v("Delete")]
+                      )
+                    ])
                   ])
                 : _vm._e()
             }),
@@ -23331,7 +23510,7 @@ var render = function() {
               { staticClass: "modal-dialog", attrs: { role: "document" } },
               [
                 _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
                     _c(
@@ -23413,6 +23592,7 @@ var render = function() {
                               { staticClass: "row", attrs: { id: "success" } },
                               [
                                 _c("img", {
+                                  staticClass: "img-thumbnail img-fluid",
                                   attrs: { src: this.picture, alt: "" }
                                 })
                               ]
@@ -23462,6 +23642,147 @@ var render = function() {
               ]
             )
           ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "editModal",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "exampleModalLabel",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("form", [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                          _vm._v("Category Name")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.storeEditData.categoryName,
+                              expression: "storeEditData.categoryName"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "category",
+                            "aria-describedby": "catName",
+                            readonly: ""
+                          },
+                          domProps: { value: _vm.storeEditData.categoryName },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.storeEditData,
+                                "categoryName",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            staticClass: "form-text text-muted",
+                            attrs: { id: "name" }
+                          },
+                          [_vm._v("Category name")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                          _vm._v("New Category Name")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.editData.category,
+                              expression: "editData.category"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "editcategory",
+                            "aria-describedby": "catName"
+                          },
+                          domProps: { value: _vm.editData.category },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.editData,
+                                "category",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            staticClass: "form-text text-muted",
+                            attrs: { id: "name2" }
+                          },
+                          [_vm._v("Enter New Category name")]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "button" },
+                        on: { click: _vm.editName }
+                      },
+                      [_c("i", { staticClass: "fas fa-save" }), _vm._v(" Save")]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ]
         )
       ])
     ],
@@ -23503,17 +23824,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
+    return _c("div", { staticClass: "modal-header" }, [
       _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Edit")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-danger", attrs: { type: "button" } },
-        [_vm._v("Delete")]
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Add Category")]
       )
     ])
   },
@@ -23525,7 +23840,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Add Category")]
+        [_vm._v("Edit Category")]
       )
     ])
   }
@@ -41131,25 +41446,67 @@ var routes = [{
   component: _components_pages_login_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
   path: "/adminhome",
+  name: "home",
   component: _components_pages_adminhomepage_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+  meta: {
+    breadcrumb: [{
+      name: "home"
+    }]
+  },
   children: [{
-    path: '/admin-dashboard',
-    component: _components_admindashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    path: "/admin-dashboard",
+    name: "home",
+    component: _components_admindashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    meta: {
+      breadcrumb: [{
+        name: "home"
+      }]
+    }
   }, {
-    path: '/admin-allusers',
-    component: _components_users_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    path: "/admin-allusers",
+    name: "users",
+    component: _components_users_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    meta: {
+      breadcrumb: [{
+        name: "home"
+      }]
+    }
   }, {
-    path: '/admin-allmail',
-    component: _components_mail_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    path: "/admin-allmail",
+    name: "mail",
+    component: _components_mail_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    meta: {
+      breadcrumb: [{
+        name: "home"
+      }]
+    }
   }, {
-    path: '/admin-allblogs',
-    component: _components_blogs_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+    path: "/admin-allblogs",
+    name: "blogs",
+    component: _components_blogs_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    meta: {
+      breadcrumb: [{
+        name: "home"
+      }]
+    }
   }, {
-    path: '/admin-alltags',
-    component: _components_tags_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    path: "/admin-alltags",
+    name: "tags",
+    component: _components_tags_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    meta: {
+      breadcrumb: [{
+        name: "home"
+      }]
+    }
   }, {
-    path: '/admin-allcategories',
-    component: _components_categories_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    path: "/admin-allcategories",
+    name: "category",
+    component: _components_categories_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    meta: {
+      breadcrumb: [{
+        name: "home"
+      }]
+    }
   }]
 }];
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

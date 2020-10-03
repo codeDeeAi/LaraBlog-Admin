@@ -54,6 +54,7 @@
 <script>
 import loader from "./loader";
 export default {
+  name: 'mail',
   components:{
     loader
   },

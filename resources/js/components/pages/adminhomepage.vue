@@ -98,6 +98,7 @@
 <script>
 import navmain from "../adminnav";
 export default {
+  name: 'home',
   components: {
     navmain,
   },

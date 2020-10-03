@@ -25,33 +25,61 @@ const routes = [{
     },
     {
         path: "/adminhome",
+        name: "home",
         component: adminhome,
+        meta: {
+            breadcrumb: [{ name: "home" }]
+        },
         children: [{
-                path: '/admin-dashboard',
-                component: admindashboard
+                path: "/admin-dashboard",
+                name: "home",
+                component: admindashboard,
+                meta: {
+                    breadcrumb: [{ name: "home" }]
+                }
             },
             {
-                path: '/admin-allusers',
-                component: users
+                path: "/admin-allusers",
+                name: "users",
+                component: users,
+                meta: {
+                    breadcrumb: [{ name: "home" }]
+                }
             },
             {
-                path: '/admin-allmail',
-                component: mail
+                path: "/admin-allmail",
+                name: "mail",
+                component: mail,
+                meta: {
+                    breadcrumb: [{ name: "home" }]
+                }
             },
             {
-                path: '/admin-allblogs',
-                component: blogs
+                path: "/admin-allblogs",
+                name: "blogs",
+                component: blogs,
+                meta: {
+                    breadcrumb: [{ name: "home" }]
+                }
             },
             {
-                path: '/admin-alltags',
-                component: tags
+                path: "/admin-alltags",
+                name: "tags",
+                component: tags,
+                meta: {
+                    breadcrumb: [{ name: "home" }]
+                }
             },
             {
-                path: '/admin-allcategories',
-                component: categories
-            },
+                path: "/admin-allcategories",
+                name: "category",
+                component: categories,
+                meta: {
+                    breadcrumb: [{ name: "home" }]
+                }
+            }
         ]
-    },
+    }
 ];
 
 export default new Router({

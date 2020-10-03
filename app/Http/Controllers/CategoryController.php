@@ -38,4 +38,19 @@ class CategoryController extends Controller
     public function viewCategories(){
         return Category::all();
     }
+
+    public function editCategory(Request $request){
+        $this->validate($request, [
+            'category' => 'required',
+            'id' => 'required'
+        ]);
+
+        // Update Category Name
+        Category::where('id', $request->id)->update([
+            'categoryName' => $request->category
+        ]);
+
+        // Return data after update
+        // return Category::all();
+    }
 }

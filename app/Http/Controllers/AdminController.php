@@ -33,7 +33,7 @@ class AdminController extends Controller
             'index' => 'required'
         ]);
 
-        // Create new tag
+        // Update tag
         Tag::where('id', $request->index)->update([
             'name' => $request->name
         ]);

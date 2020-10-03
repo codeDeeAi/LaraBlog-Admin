@@ -53,6 +53,7 @@
 <script>
 import loader from "./loader";
 export default {
+  name: 'users',
   components:{
     loader
   },

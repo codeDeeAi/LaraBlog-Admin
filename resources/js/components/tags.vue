@@ -86,6 +86,7 @@
 <script>
 import loader from "./loader";
 export default {
+  name: 'tags',
   components:{
     loader
   },
@@ -107,6 +108,19 @@ export default {
     }
   },
   methods: {
+    async fetchData(){
+      const res = await this.callApi(
+                  'get',
+                  'app/get_tags',
+                  this.data 
+              )
+              if (res.status==200) {
+                  this.tags = res.data;
+                  this.spin = true;
+                  } else{
+                      this.toast('Something went wrong!', 'error');
+                  }
+    },
      async addTag(){
           if (this.data.name.trim()=='') {
             return  this.toast('Tag name is required!', 'error');
@@ -117,9 +131,10 @@ export default {
                   this.data 
               )
               if (res.status==200) {
-                      this.tags.unshift(res.data);
                      this.toast('Tag has been added successfully!', 'success');
                      this.data.name = '';
+                     $('#addTagModal').modal('hide');
+                     return this.fetchData();
                   } else{
                       this.toast('Error adding Tag!', 'error');
                   }
@@ -144,7 +159,7 @@ export default {
                      this.toast('Tag name has been edited successfully!', 'success');
                      this.editDataNew.name = '';
                      $('#editTagModal').modal('hide');
-                     this.tags.unshift(res.data);
+                     return this.fetchData();
                   } else{
                       this.toast('Error adding Tag!', 'error');
                   }
@@ -160,10 +175,9 @@ export default {
                   'app/delete_tag',
                    tag 
               );
-               if (res.status==200) {   
-                //  this.tags.splice[i, 1];                  
+               if (res.status==200) {                                   
                      this.toast('Tag name has been deleted successfully!', 'success');
-                     this.tags.unshift(res.data);
+                     return this.fetchData();
                   } else{
                       this.toast('Something went wrong!', 'error');
                       this.toast('Error deleting Tag!', 'error');
@@ -172,17 +186,7 @@ export default {
       }
      },  
   async created() {
-     const res = await this.callApi(
-                  'get',
-                  'app/get_tags',
-                  this.data 
-              )
-              if (res.status==200) {
-                  this.tags = res.data;
-                  this.spin = true;
-                  } else{
-                      this.toast('Something went wrong!', 'error');
-                  }
+     this.fetchData();
   },
   mounted(){
     // this.spin = true;
