@@ -23,6 +23,16 @@
 
         {{-- Public css --}}
         <link rel="stylesheet" href="/css/style.css">
+
+        {{-- Csrf --}}
+        {{-- <script>
+            (function(){
+                window.Laravel = {
+                    csrfToken:'{{ csrf_token() }}'
+                };
+            })();
+            
+        </script> --}}
         
     </head>
     <body>

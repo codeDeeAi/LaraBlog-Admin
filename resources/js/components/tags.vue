@@ -4,7 +4,7 @@
     <loader v-if="!spin"></loader>
     <!-- Preloader Ends -->
     <div class="tags-table">
-      <h4 class="card-title">Categories <a href="!#" class="btn btn-outline-light" data-toggle="modal" data-target="#addTagModal">+ Add Tag</a></h4>
+      <h4 class="card-title">All Tags <a href="!#" class="btn btn-outline-light" data-toggle="modal" data-target="#addTagModal">+ Add Tag</a></h4>
       <table class="table table-striped table-bordered">
         <thead>
           <tr>

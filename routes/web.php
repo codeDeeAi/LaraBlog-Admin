@@ -20,6 +20,12 @@ Route::get('app/get_tags', 'AdminController@getTag');
 Route::post('app/edit_tag', 'AdminController@editTag');
 Route::post('app/delete_tag', 'AdminController@deleteTag');
 
+// Routes for categories
+Route::post('app/upload_category', 'CategoryController@upload');
+Route::get('app/get_category', 'CategoryController@viewCategories');
+// Route::post('app/edit_category', 'CategoryController@editTag');
+// Route::post('app/delete_category', 'CategoryController@deleteTag');
+
 Route::get('/', function () {
     return view('welcome');
 });

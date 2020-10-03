@@ -31,6 +31,11 @@
             </router-link>
           </span>
           <span>
+            <router-link to="/admin-allcategories">
+            <i class="fa fa-book"></i>
+            </router-link>
+          </span>
+          <span>
             <router-link to="/admin-allusers">
               <i class="fas fa-users"></i>
             </router-link>
@@ -59,9 +64,12 @@
               <router-link to="/admin-alltags">Tags</router-link>
             </div>
             <div v-show="showLink" key="5">
-              <router-link to="/admin-allusers">Users</router-link>
+              <router-link to="/admin-allcategories">Ctgry</router-link>
             </div>
             <div v-show="showLink" key="6">
+              <router-link to="/admin-allusers">Users</router-link>
+            </div>
+            <div v-show="showLink" key="7">
               <router-link to="/admin-allmail">Mail</router-link>
             </div>
           </transition-group>
@@ -261,7 +269,7 @@ export default {
     }
   }
   .navigation-links {
-    padding-top: 18%;
+    padding-top: 16%;
     padding-left: 20%;
     float: left;
 
