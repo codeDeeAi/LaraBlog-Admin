@@ -27,7 +27,7 @@
             <td>{{d.created_at}}</td>
             <td>
               <button type="button" class="btn btn-primary" @click="editNameModal(d, i)">Edit</button>
-              <button type="button" class="btn btn-danger">Delete</button>
+              <button type="button" class="btn btn-danger" @click="deleteCategory(d, i)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -196,6 +196,8 @@ export default {
               this.toast('Upload a category or click <b>Close</b> !', 'info');
           } else {
               $('#uploadModal').modal('hide');
+              this.category = '';
+              this.picture = null;
           }
       },
       editNameModal(d, i){
@@ -220,6 +222,26 @@ export default {
                      this.editData.category = ''; 
                      $('#editModal').modal('hide');
                      return this.fetchData();                    
+                  }
+          }
+      },
+      async deleteCategory(d, i){
+        //   console.log(d)
+        //   console.log(d.iconImage)
+        if (!confirm('Are you sure you want to delete this category?')) {
+              this.toast('Category will not be deleted!', 'warning');
+          }else{            
+            const res = await this.callApi(
+                  'post',
+                  'app/delete_category',
+                   d 
+              );
+               if (res.status==200) {                                   
+                     this.toast('Category has been deleted successfully!', 'success');
+                     return this.fetchData();
+                  } else{
+                      this.toast('Something went wrong!', 'error');
+                      this.toast('Error deleting Category!', 'error');
                   }
           }
       },

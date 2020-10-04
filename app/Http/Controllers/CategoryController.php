@@ -22,10 +22,13 @@ class CategoryController extends Controller
                 $extension = $request->image->extension();
                 $request->image->storeAs('/public', $validated['category'].".".$extension);
                 $url = Storage::url($validated['category'].".".$extension);
+                // $tag = "\"/;
+                $path = $validated['category'].".".$extension;
 
                 Category::create([
                     'categoryName'=>$request->category, 
                     'iconImage'=>$url,
+                    'path' => $path
                 ]);
                 
             }
@@ -50,7 +53,26 @@ class CategoryController extends Controller
             'categoryName' => $request->category
         ]);
 
-        // Return data after update
-        // return Category::all();
+    }
+
+    public function deleteCategory(Request $request){
+        $this->validate($request, [            
+            'id' => 'required',
+            'categoryName' => 'required',
+            'iconImage' => 'required',
+        ]);
+
+        // Deletes Icon Image
+        $id = $request->id;
+        $object = Category::findOrFail($id);
+        $img_path = public_path().$object->iconImage;
+        $delImage = unlink($img_path);
+        if($delImage){
+             // Deletes Category
+            Category::where('id', $request->id)->delete();
+        }else{
+            abort(500, 'Could not delete category :(');
+        }
+       
     }
 }

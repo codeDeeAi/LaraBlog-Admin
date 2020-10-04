@@ -2509,6 +2509,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.toast('Upload a category or click <b>Close</b> !', 'info');
       } else {
         $('#uploadModal').modal('hide');
+        this.category = '';
+        this.picture = null;
       }
     },
     editNameModal: function editNameModal(d, i) {
@@ -2568,25 +2570,73 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
+    },
+    deleteCategory: function deleteCategory(d, i) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (confirm('Are you sure you want to delete this category?')) {
+                  _context4.next = 4;
+                  break;
+                }
+
+                _this5.toast('Category will not be deleted!', 'warning');
+
+                _context4.next = 14;
+                break;
+
+              case 4:
+                _context4.next = 6;
+                return _this5.callApi('post', 'app/delete_category', d);
+
+              case 6:
+                res = _context4.sent;
+
+                if (!(res.status == 200)) {
+                  _context4.next = 12;
+                  break;
+                }
+
+                _this5.toast('Category has been deleted successfully!', 'success');
+
+                return _context4.abrupt("return", _this5.fetchData());
+
+              case 12:
+                _this5.toast('Something went wrong!', 'error');
+
+                _this5.toast('Error deleting Category!', 'error');
+
+              case 14:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               //   this.token = window.Laravel.csrfToken
-              _this5.fetchData();
+              _this6.fetchData();
 
             case 1:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   },
   mounted: function mounted() {// this.spin = true;
@@ -23480,7 +23530,12 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-danger",
-                          attrs: { type: "button" }
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteCategory(d, i)
+                            }
+                          }
                         },
                         [_vm._v("Delete")]
                       )

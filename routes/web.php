@@ -24,7 +24,7 @@ Route::post('app/delete_tag', 'AdminController@deleteTag');
 Route::post('app/upload_category', 'CategoryController@upload');
 Route::get('app/get_category', 'CategoryController@viewCategories');
 Route::post('app/edit_category', 'CategoryController@editCategory');
-// Route::post('app/delete_category', 'CategoryController@deleteTag');
+Route::post('app/delete_category', 'CategoryController@deleteCategory');
 
 Route::get('/', function () {
     return view('welcome');
