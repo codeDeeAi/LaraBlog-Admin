@@ -137,7 +137,6 @@ ul li .dropdown a:hover {
 nav ol li a:hover {
   text-decoration: none;
   color: #00acee;
-  font-size: 1.1rem;
 }
 .breadcrumb {
   margin-top: 5%;

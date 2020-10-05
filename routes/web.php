@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Routes for get tag
+// Routes for  Tags
 Route::post('app/create_tag', 'AdminController@addTag');
 Route::get('app/get_tags', 'AdminController@getTag');
 Route::post('app/edit_tag', 'AdminController@editTag');
@@ -25,6 +25,12 @@ Route::post('app/upload_category', 'CategoryController@upload');
 Route::get('app/get_category', 'CategoryController@viewCategories');
 Route::post('app/edit_category', 'CategoryController@editCategory');
 Route::post('app/delete_category', 'CategoryController@deleteCategory');
+
+// Routes for users
+Route::post('app/create_user', 'UserController@create');
+Route::get('app/get_users', 'UserController@viewUsers');
+Route::post('app/edit_users', 'UserController@editUsers');
+Route::post('app/delete_user', 'UserController@deleteUser');
 
 Route::get('/', function () {
     return view('welcome');

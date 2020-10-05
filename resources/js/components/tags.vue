@@ -5,7 +5,7 @@
     <!-- Preloader Ends -->
     <div class="tags-table">
       <h4 class="card-title">All Tags <a href="!#" class="btn btn-outline-light" data-toggle="modal" data-target="#addTagModal">+ Add Tag</a></h4>
-      <table class="table table-striped table-bordered">
+      <table class="table table-borderless table-hover table-responsive-lg">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -117,6 +117,7 @@ export default {
               if (res.status==200) {
                   this.tags = res.data;
                   this.spin = true;
+                  this.toastFetchData();
                   } else{
                       this.toast('Something went wrong!', 'error');
                   }

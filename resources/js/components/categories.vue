@@ -5,7 +5,7 @@
     <!-- Preloader Ends -->
     <div class="blogs-table">
       <h4 class="card-title">Categories <button  class="btn btn-outline-light" data-toggle="modal" data-target="#uploadModal"><i class="fas fa-plus"></i> New</button></h4>
-      <table class="table table-striped table-bordered">
+      <table class="table table-borderless table-hover table-responsive-lg">
         <thead>
           <tr>
             <!-- <th scope="col">ID</th> -->
@@ -144,6 +144,7 @@ export default {
               )
               if (res.status==200) {
                   this.data = res.data;
+                  this.toastFetchData();
                   this.spin = true;
                   } else{
                       this.toast('Something went wrong!', 'error');

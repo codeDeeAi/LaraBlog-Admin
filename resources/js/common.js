@@ -30,6 +30,13 @@ export default {
                 type: type,
                 // all of other options may go here
             });
+        },
+        toastFetchData() {
+            Vue.$toast.open({
+                message: 'Data fetched successfully',
+                type: 'success',
+                // all of other options may go here
+            });
         }
     },
 }

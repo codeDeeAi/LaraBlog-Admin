@@ -5,7 +5,7 @@
     <!-- Preloader Ends -->
     <div class="mail-table">
       <h4 class="card-title">All Mail</h4>
-      <table class="table table-striped table-bordered">
+      <table class="table table-borderless table-hover table-responsive-lg">
         <thead>
           <tr>
             <th scope="col">Date</th>

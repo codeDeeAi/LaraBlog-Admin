@@ -63,7 +63,7 @@
                             <h4 class="card-title">
                                 Recent
                             </h4>
-                            <table class="table table-striped table-bordered ">
+                            <table class="table table-striped table-borderless table-responsive-lg ">
                                     <thead>
                                         <tr>
                                         <th scope="col">Date</th>
