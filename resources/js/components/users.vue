@@ -132,7 +132,12 @@
                 <input type="text" readonly class="form-control-plaintext"  :value="eachUser.userType">
               </div>
             </div>
-            
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Created At</label>
+              <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext"  :value="eachUser.created_at">
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer">

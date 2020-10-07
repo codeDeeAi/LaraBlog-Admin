@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\NewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Routes for  Login
+Route::post('app/admin_login', 'UserController@adminLogin');
 
 // Routes for  Tags
 Route::post('app/create_tag', 'AdminController@addTag');
@@ -37,9 +39,10 @@ Route::get('/', function () {
 });
 // Pizzas Route
 Route::get('/pizzas', 'PizzaController@index');
-// New route
-Route::get('/new', 'NewController@index');
 // If route not found, return welcome page
 Route::any('{slug}', function () {
     return view('welcome');
 });
+// Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

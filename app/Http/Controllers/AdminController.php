@@ -18,8 +18,6 @@ class AdminController extends Controller
             'name' => $request->name
         ]);
         
-        // Redirect to page
-        // return redirect('/admin-alltags');
     }
     public function getTag(){
         // Validation
@@ -38,8 +36,6 @@ class AdminController extends Controller
             'name' => $request->name
         ]);
         
-        // Redirect to page
-        // return redirect('/admin-alltags');
     }
     public function deleteTag(Request $request){
          // Validation

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -35,7 +36,7 @@ class UserController extends Controller
 
     }
 
-    protected function viewUsers(){
+    public function viewUsers(){
         return User::all();
     }
 
@@ -79,7 +80,50 @@ class UserController extends Controller
      User::where('id', $request->id)->delete();
  }
 
-
+// Login
+public function adminLogin(Request $request){
+    $this->validate($request, [
+        'email' => 'required|email',
+        'password' => 'bail|required|min:6',
+    ]);
+    // Auth var
+    // $credentials = $request->only('email', 'password');
+    $email = $request->email;
+    $password = $request->password;
+    
+    //  Auth::attempt($credentials) == true  ;
+     if(Auth::attempt(['email' => $email, 'password' => $password], true)){
+        $user = Auth::user();
+        return response()->json([
+                    'user'=> $user,
+                    'message' => 'you are authenticated'
+                ]);
+     }else{
+        return response()->json([
+            'message' => 'you are not authenticated',
+            'auth' => Auth::attempt(['email' => $email, 'password' => $password])
+        ]);
+     }
+    // if ($att !== false) {
+    //     $user = Auth::user();
+    //     return response()->json([
+    //         'user'=> $user
+    //     ]);
+        // if($user->userType == 'Admin'){
+        //     Auth::logout();
+        //     return response()->json([
+        //         'message'=> 'you are authenticated',
+        //         'user'=> $user
+        //     ]);
+        // }
+    // } else {
+    //     return response()->json([
+    //         'message'=> 'you are not authenticated',
+    //         'user'=> Auth::attempt(['email' => $email, 'password' => $password])
+    //     ], 401);
+    // }
+    
+}
 
 
 }

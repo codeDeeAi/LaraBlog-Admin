@@ -1,5 +1,5 @@
 <template>
-  <div class="row login-body">
+  <div class="login-body">
     <div class="container-fluid">
       <div class="container">
         <div class="row">
@@ -16,12 +16,12 @@
                   </div>
                   <div class="row">
                     <div class="col"></div>
-                    <span class="card-title">LaraBlog </span>
+                    <span class="card-title">LaraBlog</span>
                     <div class="col"></div>
                   </div>
                   <div class="row">
                     <div class="col"></div>
-                    <span class="card-title">Signin </span>
+                    <span class="card-title">Signin</span>
                     <div class="col"></div>
                   </div>
                 </div>
@@ -30,25 +30,20 @@
                 <!-- Login Form -->
                 <form>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                    />
+                    <label>Email</label>
+                    <input type="email" class="form-control" v-model="data.email" required />
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" />
+                    <label>Password</label>
+                    <input type="password" class="form-control" v-model="data.password" required />
                   </div>
                   <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                    <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+                    <input type="checkbox" class="form-check-input" />
+                    <label class="form-check-label">Remember Me</label>
                   </div>
                   <div class="row">
                     <div class="col"></div>
-                    <a href="#!" class="btn btn-outline-primary">Login</a>
+                    <button  class="btn btn-outline-primary" :disabled="isloading" :loading="isloading" @click.prevent="login">{{isloading ? 'loading' : 'Login '}} </button>
                     <div class="col"></div>
                   </div>
                 </form>
@@ -67,11 +62,68 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      data: {
+        email: "",
+        password: "",
+      },
+      isloading: false,
+    };
+  },
+  methods: {
+    validEmail(email){
+      let re =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/;
+      return re.test(email);
+    },
+    async login(){
+      // Call api here
+        const res = await this.callApi(
+                        'post',
+                        'app/admin_login',
+                        this.data
+                    );
+       if (this.data.email.trim()=='') {
+        this.toast('Email is required !','error')
+      }else if (!this.validEmail(this.data.email)){
+        this.toast('Enter Valid email !','error')
+      }else if (this.data.password.trim()==''){
+        this.toast('Password is required !','error')
+      }else if (this.data.password.length < 6){
+        this.toast('Incorrect password  !','error')
+      }else{  
+        this.isloading = true;      
+                  if (!res.status==200) {
+                      var errs =res.data.message;
+                      for (let i in errs) {
+                        var err = errs;
+                      this.toast(err, 'error');                        
+                      }
+                  }else if(res.status==401){
+                      var errs =res.data.message;
+                      for (let i in errs) {
+                        var err = errs;
+                      this.toast(err, 'error');                        
+                      }                   
+                      }else{
+                    var errs =res.data.message;
+                    for (let i in errs) {
+                        var err = errs;
+                      this.toast(err, 'error');                        
+                      }                
+                  }
+
+                  this.isloading = true; 
+      }
+    }
+  },
+};
 </script>
 <style scoped>
 .login-body {
   background-image: url(/imgs/books.jpg);
+  background-size: cover;
   padding-top: 5%;
   height: 100vh;
 }
@@ -88,12 +140,12 @@ export default {};
   height: 100px;
   border-radius: 50%;
 }
-.card-title{
-    font-size: 1.3rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    /* text-transform: uppercase; */
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 3% auto;
+.card-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  /* text-transform: uppercase; */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 3% auto;
 }
 </style>
